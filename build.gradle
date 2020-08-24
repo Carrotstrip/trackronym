@@ -1,0 +1,20 @@
+buildscript {
+    apply from: new File(project.projectDir, "platform/py-library/versions.gradle")
+    apply from: new File(project.projectDir, "platform/versions.gradle")
+    apply from: new File(project.projectDir, "versions.gradle")
+    repositories {
+        maven {
+            url = System.getProperty('nexus.host.url') + "maven-gradle-plugins"
+            credentials (PasswordCredentials) {
+                username = System.getProperty('nexus.username')
+                password = System.getProperty('nexus.password')
+            }
+        }
+    }
+    dependencies {
+        classpath "fr.brouillard.oss.gradle:gradle-jgitver-plugin:$versionPlugin_jgitver"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:$versionPlugin_sonarqube"
+    }
+}
+
+apply from: new File(project.projectDir, "platform/py-library/py-library.gradle")
